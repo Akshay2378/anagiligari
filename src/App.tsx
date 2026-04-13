@@ -192,7 +192,7 @@ export default function App() {
               >
                 <img
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
-                  src="https://lh3.googleusercontent.com/aida/ADBb0uiOZHEQFODGgXTbIzT-AW9CHKC4CnxTnntbt-00Dvar2LMQIXKNy5VQyMqNI4-X6hkQCExpewzfXJozQos_fU6LZVcoRlEHOLE0YMavqNdbolk96hsByEQnHv8TaNSAeKuLLtlVvXq5ATwwIv5lDY7m9o1NQyxsJiBknMq0ROrC0Vt8X4cqeZcM1_i2Wy4lfZjpaU0zUVuykihmW0dSRXAQQMBjj27cPFD-a0G8WBeFxUjGIPH2GFxLX70ASX-EClYvPH6kPHyGbwA"
+                  src=".\passportpic.jpg"
                   alt="Akshay Kumar N"
                   referrerPolicy="no-referrer"
                 />
