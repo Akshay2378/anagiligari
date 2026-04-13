@@ -192,7 +192,7 @@ export default function App() {
               >
                 <img
                   className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
-                  src=".\passportpic.jpg"
+                  src="src/passportpic.jpg"
                   alt="Akshay Kumar N"
                   referrerPolicy="no-referrer"
                 />
