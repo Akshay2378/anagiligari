@@ -4,60 +4,103 @@
  */
 
 import { motion } from "motion/react";
-import { 
-  Terminal, 
-  Globe, 
-  Cloud, 
-  Cpu, 
-  Database, 
-  Search, 
-  Bot, 
-  Network, 
-  Code, 
-  ArrowRight, 
-  ExternalLink, 
-  Mail, 
-  Linkedin, 
-  Github, 
-  CheckCircle2, 
+import {
+  ArrowRight,
+  Bot,
+  BrainCircuit,
+  CheckCircle2,
+  Cloud,
+  Code2,
+  Cpu,
+  Database,
+  DatabaseZap,
+  ExternalLink,
+  Github,
+  Linkedin,
+  Mail,
+  Network,
   Send,
-  ChevronDown,
-  Link as LinkIcon
+  ServerCog,
+  ShieldCheck,
+  Sparkles,
+  Workflow,
+  type LucideIcon,
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useEffect, useState, type FormEvent } from "react";
+import profileImage from "./assets/akshay-profile.jpg";
+
+const emailAddress = "akshayusa23@gmail.com";
+const linkedInUrl = "https://www.linkedin.com/in/akshay-kumar-n";
+const githubUrl = "https://github.com/anagiligari";
 
 const navLinks = [
   { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Skills", href: "#skills" },
-  { name: "Projects", href: "#projects" },
+  { name: "Expertise", href: "#expertise" },
+  { name: "Work", href: "#work" },
   { name: "Experience", href: "#experience" },
   { name: "Contact", href: "#contact" },
 ];
 
-const aiSkills = [
-  { name: "GPT-4 / 4o", icon: Bot },
+const metrics = [
+  { value: "10+", label: "Years in enterprise engineering" },
+  { value: "3", label: "AI and cloud domains" },
+  { value: "RAG", label: "Search, retrieval, and orchestration" },
+];
+
+const expertise: Array<{ title: string; detail: string; icon: LucideIcon }> = [
+  {
+    title: "LLM product engineering",
+    detail: "Designing AI workflows that move from prompt prototypes into monitored, maintainable production systems.",
+    icon: BrainCircuit,
+  },
+  {
+    title: "RAG and document intelligence",
+    detail: "Building retrieval pipelines, vector search, metadata filters, and answer grounding for enterprise knowledge.",
+    icon: DatabaseZap,
+  },
+  {
+    title: "Enterprise platform delivery",
+    detail: "Shipping resilient .NET, Angular, React, API, and cloud systems for regulated and high-scale teams.",
+    icon: ServerCog,
+  },
+];
+
+const aiStack = [
+  { name: "OpenAI / GPT-4o", icon: Bot },
   { name: "LangChain", icon: Network },
-  { name: "Pinecone / FAISS", icon: Database },
-  { name: "RAG Architecture", icon: Cpu },
-  { name: "Azure AI Search", icon: Search },
+  { name: "Vector databases", icon: Database },
+  { name: "Azure AI Search", icon: Sparkles },
+  { name: "RAG architecture", icon: Cpu },
+  { name: ".NET and APIs", icon: Code2 },
+  { name: "AWS / Azure", icon: Cloud },
+  { name: "Agentic workflows", icon: Workflow },
 ];
 
 const projects = [
   {
-    title: "AI Resume Builder",
-    description: "An automated pipeline utilizing n8n workflows and OpenAI to parse LinkedIn profiles and generate optimized, ATS-friendly resumes.",
+    title: "AI Resume Intelligence Platform",
     category: "AI Engineering",
-    tags: ["n8n", "OpenAI", "Node.js"],
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuABtU2_9tt-69vWerTOmHw-lOVGOxROXrPvnznNVpAV3VyTQBOCdeW7Aluk6uFvARqqgjf8dQyqN6hI3Xaqi3FZHvHpoMgpBw2sfZycVIDQECLlT1B0xcQf8pHnYp8omFRnPbCphoqDfCjyvgBBVaSyc8MzSME91yYvspdGmMNqbBzi6tb2bv_futjZl7STBoxmdMrLu18ScXg4wii2iktfwOk8oJsQ39pHrhdvdQNnF-T2w7hqXXtEVIcwNmVYGG2rGfHqWm7BQuJ8"
+    summary:
+      "An automated resume generation workflow that parses professional profiles, maps experience to target roles, and produces ATS-ready drafts with LLM-assisted refinement.",
+    tags: ["OpenAI", "n8n", "Node.js", "Prompt systems"],
+    icon: Workflow,
   },
   {
-    title: "RAG-powered Chatbot",
-    description: "Enterprise chatbot utilizing Retrieval-Augmented Generation (RAG) to provide context-aware answers from private internal documentation.",
+    title: "Enterprise RAG Chatbot",
     category: "LLM Architecture",
-    tags: ["LangChain", "Vector DB", "Python"],
-    image: "https://lh3.googleusercontent.com/aida-public/AB6AXuCz6mLhq0-_ZigJGUClBFjNjM9Wo2Xb2z1aCn5QhBonxFAcsJqLTVzzf43k6l2Y_V2stLvbfXG5V1pLAJBGP9ALusK8vu41VgBkVACgFJ0JfCb9My0-22JWRv7JEEAoS7l7za0W-pdvKdwj4i4Rdjs7GfLIITaTaa4q_UVQyThaHasreKhUd7awproeHXcAWqRiKJlVhhLsbxgI34otEa_5OHMybC9W3mARhtSUzeHdM8APC99hxLR6uxMEvFTgMGs9-8HcAKD9Gjqu"
-  }
+    summary:
+      "A retrieval-augmented assistant for private documentation, combining semantic search, citations, access-aware context, and response quality guardrails.",
+    tags: ["LangChain", "Vector search", "Python", "Azure AI Search"],
+    icon: BrainCircuit,
+  },
+  {
+    title: "Cloud Modernization Toolkit",
+    category: "Platform Engineering",
+    summary:
+      "A reusable modernization foundation for APIs, identity, observability, and deployment automation across cloud-native enterprise applications.",
+    tags: [".NET Core", "Angular", "AWS", "CI/CD"],
+    icon: Cloud,
+  },
 ];
 
 const experience = [
@@ -65,63 +108,97 @@ const experience = [
     company: "World Bank",
     role: "Senior AI/LLM Consultant",
     period: "Apr 2025 - Present",
-    description: "Leading implementation of RAG-based search engines and AI-orchestrated data processing for global financial datasets.",
-    align: "right"
+    description:
+      "Leading RAG-based search, AI-assisted data workflows, and scalable intelligence layers for global financial datasets.",
   },
   {
     company: "PayPal",
     role: "Senior Full Stack Developer",
-    period: "Sept 2024 - Apr 2025",
-    description: "Architected high-performance payment processing modules using .NET Core and Angular 17.",
-    align: "left"
+    period: "Sep 2024 - Apr 2025",
+    description:
+      "Architected payment platform modules with .NET Core, Angular, APIs, and performance-focused delivery practices.",
   },
   {
     company: "State of New Mexico",
     role: "Senior Software Engineer",
-    period: "Sept 2023 - Aug 2024",
-    description: "Modernized legacy government portals into modern cloud-native applications.",
-    align: "right"
-  }
+    period: "Sep 2023 - Aug 2024",
+    description:
+      "Modernized public-sector portals into secure, cloud-ready systems with cleaner UX and maintainable service boundaries.",
+  },
+  {
+    company: "Thomson Reuters and Zetagile",
+    role: "Software Engineering Roles",
+    period: "Earlier experience",
+    description:
+      "Built the foundation in enterprise application development, data integrations, backend services, and product delivery.",
+  },
 ];
+
+const technologyGroups = [
+  {
+    title: "AI and data",
+    items: ["OpenAI", "RAG", "Embeddings", "Vector DB", "Azure AI Search", "Prompt engineering"],
+  },
+  {
+    title: "Application engineering",
+    items: [".NET Core", "C#", "Web API", "Angular", "React", "TypeScript"],
+  },
+  {
+    title: "Cloud and delivery",
+    items: ["AWS", "Azure", "Docker", "Kubernetes", "CI/CD", "Observability"],
+  },
+];
+
+function handleContactSubmit(event: FormEvent<HTMLFormElement>) {
+  event.preventDefault();
+  const formData = new FormData(event.currentTarget);
+  const name = String(formData.get("name") || "");
+  const message = String(formData.get("message") || "");
+  const subject = encodeURIComponent(`Portfolio inquiry from ${name || "a visitor"}`);
+  const body = encodeURIComponent(message);
+
+  window.location.href = `mailto:${emailAddress}?subject=${subject}&body=${body}`;
+}
 
 export default function App() {
   const [activeSection, setActiveSection] = useState("home");
+  const currentYear = new Date().getFullYear();
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = navLinks.map(link => link.href.substring(1));
-      const current = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
+      const current = navLinks
+        .map((link) => link.href.substring(1))
+        .find((section) => {
+          const element = document.getElementById(section);
+          if (!element) return false;
           const rect = element.getBoundingClientRect();
-          return rect.top >= -100 && rect.top <= 300;
-        }
-        return false;
-      });
+          return rect.top >= -120 && rect.top <= 260;
+        });
+
       if (current) setActiveSection(current);
     };
 
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
-    <div className="min-h-screen bg-background selection:bg-primary/30">
-      {/* TopNavBar */}
-      <nav className="fixed top-0 w-full z-50 bg-background/70 backdrop-blur-xl border-b border-outline-variant/20">
-        <div className="flex justify-between items-center max-w-7xl mx-auto px-6 h-16">
-          <div className="text-lg font-bold tracking-tighter text-on-surface">
+    <div className="min-h-screen bg-background text-on-background">
+      <nav className="fixed top-0 z-50 w-full border-b border-outline-variant bg-background/90 backdrop-blur-md">
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5">
+          <a href="#home" className="text-base font-bold text-on-surface">
             Akshay Kumar N
-          </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium">
+          </a>
+          <div className="hidden items-center gap-6 text-sm font-medium md:flex">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className={`transition-colors ${
+                className={`border-b-2 py-5 transition-colors ${
                   activeSection === link.href.substring(1)
-                    ? "text-on-primary-container font-semibold border-b-2 border-primary-container pb-1"
-                    : "text-on-surface-variant hover:text-on-surface"
+                    ? "border-primary text-primary"
+                    : "border-transparent text-on-surface-variant hover:text-on-surface"
                 }`}
               >
                 {link.name}
@@ -129,367 +206,324 @@ export default function App() {
             ))}
           </div>
           <a
-            href="#"
-            className="bg-primary-container text-on-primary-container px-5 py-2 rounded-xl text-sm font-semibold hover:scale-95 transition-all duration-200"
+            href={`mailto:${emailAddress}?subject=${encodeURIComponent("Resume request")}`}
+            className="inline-flex min-h-10 items-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold text-on-primary transition-colors hover:bg-primary-container"
           >
-            Download Resume
+            <Mail className="h-4 w-4" />
+            Resume
           </a>
         </div>
       </nav>
 
       <main>
-        {/* Hero Section */}
-        <section id="home" className="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6 overflow-hidden">
-          <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px]"></div>
-            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-secondary-container/10 rounded-full blur-[100px]"></div>
-          </div>
-          <div className="max-w-7xl mx-auto relative z-10">
+        <section id="home" className="border-b border-outline-variant bg-surface pt-24">
+          <div className="mx-auto grid min-h-[calc(100vh-4rem)] max-w-7xl items-center gap-12 px-5 py-12 lg:grid-cols-[1.08fr_0.92fr] lg:py-16">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.55 }}
             >
-              <div className="text-xs uppercase tracking-[0.2em] text-primary mb-4 font-semibold">
-                Engineering the Future of Intelligence
+              <div className="mb-5 inline-flex items-center gap-2 rounded-lg border border-outline-variant bg-surface-container px-3 py-2 text-xs font-bold uppercase tracking-[0.14em] text-primary">
+                <Sparkles className="h-4 w-4" />
+                AI Engineer portfolio
               </div>
-              <h1 className="text-6xl md:text-8xl font-bold tracking-tighter text-white mb-6 leading-none">
+              <h1 className="max-w-4xl text-5xl font-black leading-[1.02] text-white md:text-7xl">
                 Akshay Kumar N
               </h1>
-              <p className="text-2xl md:text-3xl font-light text-on-surface-variant max-w-3xl mb-8 leading-tight">
-                Senior Full Stack .NET Developer | <span className="text-primary">AI/LLM Engineer</span>
+              <p className="mt-5 max-w-3xl text-2xl font-semibold leading-tight text-on-surface md:text-3xl">
+                Senior AI Engineer building production LLM, RAG, cloud, and enterprise application systems.
               </p>
-              <p className="text-lg text-on-surface-variant/80 max-w-2xl mb-12 font-medium">
-                Building AI-powered enterprise applications with .NET, Cloud, and Generative AI. Specializing in RAG architectures and high-scale cloud systems.
+              <p className="mt-6 max-w-2xl text-lg leading-8 text-on-surface-variant">
+                I bring a full-stack engineering background into applied AI: turning complex business knowledge,
+                documents, and workflows into reliable intelligent software.
               </p>
-              <div className="flex flex-wrap gap-4">
+              <div className="mt-9 flex flex-wrap gap-3">
                 <a
-                  href="#projects"
-                  className="bg-gradient-to-r from-primary-container to-primary text-on-primary-container px-8 py-4 rounded-xl font-bold text-lg hover:opacity-90 transition-opacity"
+                  href="#work"
+                  className="inline-flex min-h-12 items-center gap-2 rounded-lg bg-primary px-6 font-bold text-on-primary transition-colors hover:bg-primary-container"
                 >
-                  View Projects
+                  View AI Work
+                  <ArrowRight className="h-5 w-5" />
                 </a>
                 <a
                   href="#contact"
-                  className="bg-surface-container-high border border-outline-variant/20 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-surface-container-highest transition-colors"
+                  className="inline-flex min-h-12 items-center gap-2 rounded-lg border border-outline bg-surface-container px-6 font-bold text-on-surface transition-colors hover:border-primary hover:text-primary"
                 >
-                  Contact Me
+                  Contact
+                  <Mail className="h-5 w-5" />
                 </a>
+              </div>
+              <div className="mt-12 grid gap-3 sm:grid-cols-3">
+                {metrics.map((metric) => (
+                  <div key={metric.label} className="rounded-lg border border-outline-variant bg-surface-container p-4">
+                    <div className="text-2xl font-black text-white">{metric.value}</div>
+                    <div className="mt-1 text-sm leading-5 text-on-surface-variant">{metric.label}</div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.55, delay: 0.12 }}
+              className="relative"
+            >
+              <div className="overflow-hidden rounded-lg border border-outline-variant bg-surface-container-high">
+                <img
+                  src={profileImage}
+                  alt="Akshay Kumar N professional headshot"
+                  className="aspect-[4/5] h-full w-full object-cover object-center"
+                />
+              </div>
+              <div className="mt-4 grid grid-cols-2 gap-3">
+                <div className="rounded-lg border border-outline-variant bg-surface-container p-4">
+                  <CheckCircle2 className="mb-3 h-5 w-5 text-primary" />
+                  <div className="text-sm font-bold text-white">Production AI focus</div>
+                  <div className="mt-1 text-xs leading-5 text-on-surface-variant">Grounding, evaluation, APIs</div>
+                </div>
+                <div className="rounded-lg border border-outline-variant bg-surface-container p-4">
+                  <ShieldCheck className="mb-3 h-5 w-5 text-tertiary" />
+                  <div className="text-sm font-bold text-white">Enterprise ready</div>
+                  <div className="mt-1 text-xs leading-5 text-on-surface-variant">Security, scale, delivery</div>
+                </div>
               </div>
             </motion.div>
           </div>
         </section>
 
-        {/* About Me Section */}
-        <section id="about" className="py-24 bg-surface-container-low">
-          <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-12 gap-12 items-center">
-            <div className="md:col-span-5 relative">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                className="aspect-square rounded-2xl overflow-hidden bg-surface-container-high border border-outline-variant/10"
-              >
-                <img
-                  className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700"
-                  src="src/passportpic.jpg"
-                  alt="Akshay Kumar N"
-                  referrerPolicy="no-referrer"
-                />
-              </motion.div>
-              <div className="absolute -bottom-6 -right-6 p-6 bg-surface-container-highest rounded-xl border border-outline-variant/20 shadow-xl hidden md:block">
-                <div className="text-primary font-bold text-4xl leading-none">10+</div>
-                <div className="text-xs uppercase tracking-widest text-on-surface-variant mt-2">Years Exp.</div>
-              </div>
+        <section id="expertise" className="border-b border-outline-variant bg-surface-container-low px-5 py-20">
+          <div className="mx-auto max-w-7xl">
+            <div className="max-w-3xl">
+              <p className="text-sm font-bold uppercase tracking-[0.14em] text-primary">Expertise</p>
+              <h2 className="mt-3 text-4xl font-black leading-tight text-white md:text-5xl">
+                AI engineering with enterprise delivery discipline.
+              </h2>
             </div>
-            <div className="md:col-span-7">
-              <div className="text-xs uppercase tracking-[0.1em] text-on-surface-variant mb-4">The Narrative</div>
-              <h2 className="text-4xl font-bold text-white mb-6 tracking-tight">From Enterprise .NET to AI Architecture</h2>
-              <div className="space-y-4 text-on-surface-variant text-lg leading-relaxed">
-                <p>
-                  With over a decade of experience in building mission-critical systems, I have navigated the evolution from monolithic .NET applications to distributed cloud microservices, and now, to the cutting edge of Generative AI.
-                </p>
-                <p>
-                  My journey includes engineering robust solutions for global giants like <span className="text-white font-medium">World Bank</span>, <span className="text-white font-medium">PayPal</span>, and the <span className="text-white font-medium">State of New Mexico</span>. I specialize in bridging the gap between traditional enterprise architecture and modern LLM capabilities.
-                </p>
-                <p>
-                  I don't just build chatbots; I design Document Intelligence systems and AI-orchestrated workflows that solve complex business problems using RAG (Retrieval-Augmented Generation) and Agentic frameworks.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
 
-        {/* AI/LLM Skills */}
-        <section id="skills" className="py-24 bg-surface px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="mb-16">
-              <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tighter mb-4">Artificial Intelligence Stack</h2>
-              <div className="h-1 w-24 bg-secondary-container"></div>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {aiSkills.map((skill, idx) => (
-                <motion.div
-                  key={skill.name}
+            <div className="mt-12 grid gap-5 lg:grid-cols-3">
+              {expertise.map((item, index) => (
+                <motion.article
+                  key={item.title}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
-                  className="bg-secondary-container/20 border border-secondary-container/30 p-6 rounded-xl flex flex-col items-center justify-center text-center hover:bg-secondary-container/30 transition-all cursor-default"
+                  transition={{ delay: index * 0.08 }}
+                  className="rounded-lg border border-outline-variant bg-surface p-6"
                 >
-                  <skill.icon className="text-on-secondary-container w-10 h-10 mb-3" />
-                  <div className="text-on-secondary-container font-bold text-sm">{skill.name}</div>
-                </motion.div>
+                  <item.icon className="h-8 w-8 text-primary" />
+                  <h3 className="mt-6 text-xl font-black text-white">{item.title}</h3>
+                  <p className="mt-3 leading-7 text-on-surface-variant">{item.detail}</p>
+                </motion.article>
               ))}
             </div>
-          </div>
-        </section>
 
-        {/* Technical Skills Ecosystem */}
-        <section className="py-24 bg-surface-container-low px-6">
-          <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-12">
-            {/* Backend */}
-            <div className="space-y-6">
-              <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                <Terminal className="text-primary w-5 h-5" /> Backend Ecosystem
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {[".NET CORE", "C#", "Microservices", "Web API", "Entity Framework"].map(tag => (
-                  <span key={tag} className="bg-surface-container-highest px-3 py-1 rounded text-[10px] font-bold tracking-widest text-on-surface-variant uppercase">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-            {/* Frontend */}
-            <div className="space-y-6">
-              <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                <Globe className="text-primary w-5 h-5" /> Frontend & UI
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {["Angular 18", "React", "Vue.js", "Tailwind CSS", "TypeScript"].map(tag => (
-                  <span key={tag} className="bg-surface-container-highest px-3 py-1 rounded text-[10px] font-bold tracking-widest text-on-surface-variant uppercase">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-            {/* Cloud */}
-            <div className="space-y-6">
-              <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                <Cloud className="text-primary w-5 h-5" /> Cloud & DevOps
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {["AWS (Lambda, S3)", "Azure", "Docker", "Kubernetes", "CI/CD"].map(tag => (
-                  <span key={tag} className="bg-surface-container-highest px-3 py-1 rounded text-[10px] font-bold tracking-widest text-on-surface-variant uppercase">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Projects Section */}
-        <section id="projects" className="py-24 bg-surface px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row md:justify-between md:items-end mb-16 gap-6">
+            <div className="mt-14 grid gap-8 lg:grid-cols-[0.72fr_1.28fr]">
               <div>
-                <div className="text-xs uppercase tracking-[0.2em] text-primary mb-4 font-semibold">Featured Work</div>
-                <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight">Intelligent Solutions</h2>
+                <h3 className="text-2xl font-black text-white">Core stack</h3>
+                <p className="mt-3 leading-7 text-on-surface-variant">
+                  A practical stack for building AI features that integrate with real products, teams, and data.
+                </p>
               </div>
-              <p className="text-on-surface-variant max-w-md text-lg">
-                Selected projects showcasing the intersection of enterprise engineering and advanced language models.
+              <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+                {aiStack.map((skill) => (
+                  <div key={skill.name} className="rounded-lg border border-outline-variant bg-surface p-4">
+                    <skill.icon className="h-6 w-6 text-tertiary" />
+                    <div className="mt-4 text-sm font-bold leading-5 text-white">{skill.name}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="work" className="border-b border-outline-variant bg-surface px-5 py-20">
+          <div className="mx-auto max-w-7xl">
+            <div className="flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-[0.14em] text-primary">Featured work</p>
+                <h2 className="mt-3 text-4xl font-black leading-tight text-white md:text-5xl">
+                  Intelligent systems, not demos.
+                </h2>
+              </div>
+              <p className="max-w-xl text-lg leading-8 text-on-surface-variant">
+                Selected portfolio themes across LLM automation, retrieval systems, and cloud-native platforms.
               </p>
             </div>
-            <div className="grid md:grid-cols-2 gap-8">
-              {projects.map((project, idx) => (
-                <motion.div
+
+            <div className="mt-12 grid gap-5 lg:grid-cols-3">
+              {projects.map((project, index) => (
+                <motion.article
                   key={project.title}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 22 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.2 }}
-                  className="group bg-surface-container-low border border-outline-variant/10 rounded-2xl overflow-hidden hover:border-primary/30 transition-all duration-500"
+                  transition={{ delay: index * 0.08 }}
+                  className="group overflow-hidden rounded-lg border border-outline-variant bg-surface-container-low"
                 >
-                  <div className="h-64 relative overflow-hidden">
-                    <img
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      src={project.image}
-                      alt={project.title}
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low to-transparent"></div>
-                    <div className="absolute bottom-4 left-6">
-                      <span className="bg-secondary-container text-on-secondary-container px-3 py-1 rounded-full text-[10px] font-bold">
+                  <div className="relative h-48 border-b border-outline-variant bg-surface-container-high p-5">
+                    <div className="absolute inset-x-5 top-5 flex items-center justify-between">
+                      <span className="rounded-lg border border-outline bg-surface px-3 py-1 text-xs font-bold uppercase tracking-[0.1em] text-primary">
                         {project.category}
                       </span>
+                      <project.icon className="h-6 w-6 text-tertiary" />
+                    </div>
+                    <div className="grid h-full grid-cols-3 items-end gap-3 pt-12">
+                      {[0.62, 0.82, 0.48].map((height, barIndex) => (
+                        <div key={barIndex} className="rounded-lg bg-background p-2">
+                          <div
+                            className="rounded-md border border-primary/50 bg-primary/25"
+                            style={{ height: `${height * 112}px` }}
+                          />
+                        </div>
+                      ))}
                     </div>
                   </div>
-                  <div className="p-8">
-                    <h3 className="text-2xl font-bold text-white mb-3">{project.title}</h3>
-                    <p className="text-on-surface-variant mb-6 leading-relaxed">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2 mb-8">
-                      {project.tags.map(tag => (
-                        <span key={tag} className="bg-surface-container-highest px-2 py-1 rounded text-[10px] font-bold text-on-surface-variant uppercase">
+                  <div className="p-6">
+                    <h3 className="text-2xl font-black leading-tight text-white">{project.title}</h3>
+                    <p className="mt-4 leading-7 text-on-surface-variant">{project.summary}</p>
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span key={tag} className="rounded-md bg-surface-container-high px-3 py-1 text-xs font-bold text-on-surface">
                           {tag}
                         </span>
                       ))}
                     </div>
-                    <div className="flex gap-4">
-                      <a href="#" className="text-primary font-bold flex items-center gap-1 hover:gap-2 transition-all">
-                        Case Study <ArrowRight className="w-4 h-4" />
-                      </a>
-                      <a href="#" className="text-on-surface-variant font-bold flex items-center gap-1 hover:text-on-surface transition-colors">
-                        {project.title.includes("Chatbot") ? "Demo" : "GitHub"} <ExternalLink className="w-4 h-4" />
-                      </a>
-                    </div>
                   </div>
-                </motion.div>
+                </motion.article>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Experience Timeline */}
-        <section id="experience" className="py-24 bg-surface-container-low px-6">
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-16 text-center">
-              <h2 className="text-4xl font-bold text-white mb-4">Professional Milestones</h2>
-              <p className="text-on-surface-variant">A career defined by technical excellence and architectural leadership.</p>
-            </div>
-            <div className="space-y-12">
-              {experience.map((exp, idx) => (
-                <motion.div
-                  key={exp.company}
-                  initial={{ opacity: 0, x: exp.align === "right" ? 20 : -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  className="relative pl-8 md:pl-0"
-                >
-                  <div className="hidden md:block absolute left-1/2 -translate-x-1/2 h-full w-[1px] bg-outline-variant/20"></div>
-                  <div className={`md:flex items-center justify-between w-full ${exp.align === "left" ? "md:flex-row-reverse" : ""}`}>
-                    <div className={`md:w-[45%] ${exp.align === "right" ? "md:text-right" : "md:text-left"} mb-4 md:mb-0`}>
-                      <div className="text-primary font-bold text-lg">{exp.company}</div>
-                      <div className="text-white font-medium">{exp.role}</div>
-                    </div>
-                    <div className="absolute left-0 md:left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-primary shadow-[0_0_15px_rgba(174,198,255,0.5)] z-10 border-4 border-surface-container-low"></div>
-                    <div className={`md:w-[45%] text-on-surface-variant text-sm md:text-base ${exp.align === "left" ? "md:text-right" : ""}`}>
-                      <span className="font-bold text-white block mb-1">{exp.period}</span>
-                      {exp.description}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-              <div className="relative pl-8 md:pl-0 text-center pt-8">
-                <button className="text-on-surface-variant hover:text-primary font-bold flex items-center gap-2 mx-auto transition-colors group">
-                  Show earlier experience (Thomson Reuters, Zetagile)
-                  <ChevronDown className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Credentials & Contact */}
-        <section id="contact" className="py-24 bg-surface px-6">
-          <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16">
+        <section id="experience" className="border-b border-outline-variant bg-surface-container-low px-5 py-20">
+          <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.75fr_1.25fr]">
             <div>
-              <h2 className="text-4xl font-bold text-white mb-8 tracking-tight">Credentials & Network</h2>
-              <div className="grid sm:grid-cols-2 gap-4 mb-12">
-                <div className="p-6 bg-surface-container-low border border-outline-variant/10 rounded-xl flex items-center gap-4">
-                  <CheckCircle2 className="text-primary w-8 h-8" />
-                  <div>
-                    <div className="text-white font-bold text-sm">Azure Developer</div>
-                    <div className="text-on-surface-variant text-xs">Associate</div>
+              <p className="text-sm font-bold uppercase tracking-[0.14em] text-primary">Experience</p>
+              <h2 className="mt-3 text-4xl font-black leading-tight text-white md:text-5xl">
+                Built across AI, fintech, public sector, and enterprise software.
+              </h2>
+            </div>
+            <div className="space-y-4">
+              {experience.map((item) => (
+                <article key={`${item.company}-${item.period}`} className="rounded-lg border border-outline-variant bg-surface p-6">
+                  <div className="flex flex-col gap-2 md:flex-row md:items-start md:justify-between">
+                    <div>
+                      <h3 className="text-xl font-black text-white">{item.company}</h3>
+                      <p className="mt-1 font-semibold text-primary">{item.role}</p>
+                    </div>
+                    <span className="rounded-lg border border-outline-variant px-3 py-1 text-sm font-bold text-on-surface-variant">
+                      {item.period}
+                    </span>
                   </div>
-                </div>
-                <div className="p-6 bg-surface-container-low border border-outline-variant/10 rounded-xl flex items-center gap-4">
-                  <CheckCircle2 className="text-primary w-8 h-8" />
-                  <div>
-                    <div className="text-white font-bold text-sm">AWS Developer</div>
-                    <div className="text-on-surface-variant text-xs">Associate</div>
-                  </div>
-                </div>
-              </div>
-              <div className="space-y-6">
-                <p className="text-on-surface-variant text-lg leading-relaxed">
-                  Interested in collaborating on AI-driven products or enterprise modernization? Let's discuss how we can build the next generation of intelligent software.
-                </p>
-                <div className="flex gap-4">
-                  {[
-                    { icon: Mail, href: "mailto:akshayusa23@gmail.com" },
-                    { icon: Linkedin, href: "#" },
-                    { icon: Github, href: "#" }
-                  ].map((social, i) => (
-                    <a
-                      key={i}
-                      href={social.href}
-                      className="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container-high text-white hover:bg-primary hover:text-on-primary transition-all"
-                    >
-                      <social.icon className="w-5 h-5" />
-                    </a>
+                  <p className="mt-4 leading-7 text-on-surface-variant">{item.description}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="border-b border-outline-variant bg-surface px-5 py-20">
+          <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-3">
+            {technologyGroups.map((group) => (
+              <div key={group.title} className="rounded-lg border border-outline-variant bg-surface-container-low p-6">
+                <h3 className="text-xl font-black capitalize text-white">{group.title}</h3>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {group.items.map((item) => (
+                    <span key={item} className="rounded-md bg-surface-container-high px-3 py-2 text-sm font-semibold text-on-surface">
+                      {item}
+                    </span>
                   ))}
                 </div>
               </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="contact" className="bg-surface-container-low px-5 py-20">
+          <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.85fr_1.15fr]">
+            <div>
+              <p className="text-sm font-bold uppercase tracking-[0.14em] text-primary">Contact</p>
+              <h2 className="mt-3 text-4xl font-black leading-tight text-white md:text-5xl">
+                Let&apos;s build useful AI into real products.
+              </h2>
+              <p className="mt-6 text-lg leading-8 text-on-surface-variant">
+                I&apos;m available for AI engineering, RAG architecture, platform modernization, and full-stack product delivery.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                {[
+                  { label: "Email", href: `mailto:${emailAddress}`, icon: Mail },
+                  { label: "LinkedIn", href: linkedInUrl, icon: Linkedin },
+                  { label: "GitHub", href: githubUrl, icon: Github },
+                ].map((social) => (
+                  <a
+                    key={social.label}
+                    href={social.href}
+                    target={social.href.startsWith("http") ? "_blank" : undefined}
+                    rel={social.href.startsWith("http") ? "noreferrer" : undefined}
+                    className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-outline bg-surface px-4 font-bold text-on-surface transition-colors hover:border-primary hover:text-primary"
+                  >
+                    <social.icon className="h-5 w-5" />
+                    {social.label}
+                  </a>
+                ))}
+              </div>
             </div>
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="bg-surface-container-low p-8 rounded-2xl border border-outline-variant/10"
-            >
-              <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="space-y-2">
-                    <label className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Full Name</label>
-                    <input
-                      className="w-full bg-surface-container-lowest border border-outline-variant/20 rounded-lg focus:ring-primary focus:border-primary text-white p-3 text-sm outline-none transition-all"
-                      placeholder="John Doe"
-                      type="text"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Email Address</label>
-                    <input
-                      className="w-full bg-surface-container-lowest border border-outline-variant/20 rounded-lg focus:ring-primary focus:border-primary text-white p-3 text-sm outline-none transition-all"
-                      placeholder="john@company.com"
-                      type="email"
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="text-[10px] uppercase tracking-widest text-on-surface-variant font-bold">Message</label>
-                  <textarea
-                    className="w-full bg-surface-container-lowest border border-outline-variant/20 rounded-lg focus:ring-primary focus:border-primary text-white p-3 text-sm outline-none transition-all resize-none"
-                    placeholder="How can I help you?"
-                    rows={4}
-                  ></textarea>
-                </div>
-                <button
-                  className="w-full bg-primary-container text-on-primary-container font-bold py-4 rounded-xl hover:opacity-90 transition-opacity flex items-center justify-center gap-2 group"
-                  type="submit"
-                >
-                  Send Inquiry <Send className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </button>
-              </form>
-            </motion.div>
+
+            <form onSubmit={handleContactSubmit} className="rounded-lg border border-outline-variant bg-surface p-6 md:p-8">
+              <div className="grid gap-5 md:grid-cols-2">
+                <label className="space-y-2">
+                  <span className="text-sm font-bold text-on-surface">Name</span>
+                  <input
+                    className="min-h-12 w-full rounded-lg border border-outline-variant bg-background px-4 text-on-surface outline-none transition-colors focus:border-primary"
+                    name="name"
+                    placeholder="Your name"
+                    type="text"
+                  />
+                </label>
+                <label className="space-y-2">
+                  <span className="text-sm font-bold text-on-surface">Email</span>
+                  <input
+                    className="min-h-12 w-full rounded-lg border border-outline-variant bg-background px-4 text-on-surface outline-none transition-colors focus:border-primary"
+                    name="email"
+                    placeholder="you@company.com"
+                    type="email"
+                  />
+                </label>
+              </div>
+              <label className="mt-5 block space-y-2">
+                <span className="text-sm font-bold text-on-surface">Message</span>
+                <textarea
+                  className="min-h-36 w-full resize-none rounded-lg border border-outline-variant bg-background px-4 py-3 text-on-surface outline-none transition-colors focus:border-primary"
+                  name="message"
+                  placeholder="Tell me about the AI system or product you want to build."
+                />
+              </label>
+              <button
+                type="submit"
+                className="mt-6 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 font-bold text-on-primary transition-colors hover:bg-primary-container"
+              >
+                Send Inquiry
+                <Send className="h-5 w-5" />
+              </button>
+            </form>
           </div>
         </section>
       </main>
 
-      {/* Footer */}
-      <footer className="w-full py-12 border-t border-outline-variant/10 bg-surface-container-lowest">
-        <div className="flex flex-col md:flex-row justify-between items-center max-w-7xl mx-auto px-8 gap-6 text-[10px] tracking-widest uppercase opacity-70">
-          <div className="text-on-surface-variant">
-            © 2024 Akshay Kumar N. Engineered with Precision.
-          </div>
-          <div className="flex gap-8">
-            <a href="#" className="text-on-surface-variant hover:text-primary transition-colors">LinkedIn</a>
-            <a href="#" className="text-on-surface-variant hover:text-primary transition-colors">GitHub</a>
-            <a href="#" className="text-on-surface-variant hover:text-primary transition-colors">Email</a>
+      <footer className="border-t border-outline-variant bg-background px-5 py-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 text-sm text-on-surface-variant md:flex-row md:items-center md:justify-between">
+          <p>© {currentYear} Akshay Kumar N. AI Engineer portfolio.</p>
+          <div className="flex gap-5">
+            <a href={linkedInUrl} className="hover:text-primary" target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
+            <a href={githubUrl} className="hover:text-primary" target="_blank" rel="noreferrer">
+              GitHub
+            </a>
+            <a href={`mailto:${emailAddress}`} className="hover:text-primary">
+              Email
+            </a>
           </div>
         </div>
       </footer>
